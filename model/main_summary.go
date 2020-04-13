@@ -47,30 +47,36 @@ func FetchMainSummary(svc *sheets.Service, spreadsheetID string) (*MainSummary, 
 		}
 	}
 	ms.Date = time.Now().Format("2006/01/02 15:04")
-	ms.Attr = "陽性患者数"
-	ms.Value = nums[0]
+	ms.Attr = "検査実施人数"
+	ms.Value = 0
 	ms.Children = []Child{
 		{
-			Attr:  "入院／入院調整中",
-			Value: nums[1],
+			Attr:  "陽性患者数",
+			Value: nums[0],
 			Children: []Child{
 				{
-					Attr:  "患者",
-					Value: nums[2],
-				},
-				{
-					Attr:  "無症状",
-					Value: nums[3],
+					Attr:  "入院患者数",
+					Value: nums[1],
+					Children: []Child{
+						{
+							Attr:  "症状のない方",
+							Value: nums[3],
+						},
+						{
+							Attr:  "症状のある方",
+							Value: nums[2],
+						},
+					},
 				},
 			},
 		},
 		{
-			Attr:  "死亡",
-			Value: nums[4],
+			Attr:  "退院した方",
+			Value: nums[5],
 		},
 		{
-			Attr:  "退院",
-			Value: nums[5],
+			Attr:  "亡くなられた方",
+			Value: nums[4],
 		},
 	}
 	return &ms, nil
