@@ -38,7 +38,8 @@ func FetchNews(svc *sheets.Service, spreadsheetID string) (*News, error) {
 		if val, ok := v[2].(string); ok {
 			n.Text = val
 		}
-		news.NewsItems = append(news.NewsItems, n)
+		news.NewsItems = append([]NewsItem{n}, news.NewsItems...)
 	}
+
 	return &news, nil
 }
