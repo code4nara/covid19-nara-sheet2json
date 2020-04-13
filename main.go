@@ -6,6 +6,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"time"
 
 	_ "github.com/joho/godotenv/autoload"
 	"github.com/miiton/covid19-nara-sheet2json/model"
@@ -13,6 +14,14 @@ import (
 	"golang.org/x/oauth2/google"
 	"google.golang.org/api/sheets/v4"
 )
+
+func init() {
+	loc, err := time.LoadLocation("Asia/Tokyo")
+	if err != nil {
+		loc = time.FixedZone("Asia/Tokyo", 9*60*60)
+	}
+	time.Local = loc
+}
 
 func getClient() (*http.Client, error) {
 	data, err := ioutil.ReadFile("./tmp/credentials.json")
