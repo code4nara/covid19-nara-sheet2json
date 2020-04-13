@@ -1,0 +1,27 @@
+on:
+  release:
+    types: [created]
+name: Build
+jobs:
+  release-linux-amd64:
+    name: release linux/amd64
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - name: compile and release
+      run: |
+        make build
+
+        EVENT_DATA=$(cat $GITHUB_EVENT_PATH)
+        echo $EVENT_DATA | jq .
+        UPLOAD_URL=$(echo $EVENT_DATA | jq -r .release.upload_url)
+        UPLOAD_URL=${UPLOAD_URL/\{?name,label\}/}
+
+        curl \
+        -X POST \
+        --upload-file "sheet2json" \
+        -H 'Content-Type:application/octet-stream' \
+        -H "Authorization: Bearer ${GITHUB_TOKEN}" \
+        "${UPLOAD_URL}?name=sheet2json"
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

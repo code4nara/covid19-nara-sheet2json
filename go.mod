@@ -1,4 +1,4 @@
-module github.com/miiton/c4n-covid19-sheet2json
+module github.com/miiton/covid19-nara-sheet2json
 
 go 1.14
 

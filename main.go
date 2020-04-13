@@ -8,7 +8,7 @@ import (
 	"os"
 
 	_ "github.com/joho/godotenv/autoload"
-	"github.com/miiton/c4n-covid19-sheet2json/model"
+	"github.com/miiton/covid19-nara-sheet2json/model"
 	"golang.org/x/oauth2"
 	"golang.org/x/oauth2/google"
 	"google.golang.org/api/sheets/v4"
