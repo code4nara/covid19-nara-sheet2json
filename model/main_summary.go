@@ -68,15 +68,15 @@ func FetchMainSummary(svc *sheets.Service, spreadsheetID string) (*MainSummary, 
 						},
 					},
 				},
+				{
+					Attr:  "退院した方",
+					Value: nums[5],
+				},
+				{
+					Attr:  "亡くなられた方",
+					Value: nums[4],
+				},
 			},
-		},
-		{
-			Attr:  "退院した方",
-			Value: nums[5],
-		},
-		{
-			Attr:  "亡くなられた方",
-			Value: nums[4],
 		},
 	}
 	return &ms, nil
