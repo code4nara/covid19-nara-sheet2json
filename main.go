@@ -57,7 +57,7 @@ func genData(svc *sheets.Service, spreadsheetID string) {
 	}
 	data.PatientsSummary = *patientsSummary
 	data.MainSummary = *mainSummary
-	j, err := json.MarshalIndent(data, "  ", "  ")
+	j, err := json.Marshal(data)
 	if err != nil {
 		log.Println("error:", err)
 		os.Exit(1)
@@ -84,7 +84,7 @@ func genSickbeds(svc *sheets.Service, spreadsheetID string) {
 		log.Println("error:", err)
 		os.Exit(1)
 	}
-	j, err := json.MarshalIndent(data, "  ", "  ")
+	j, err := json.Marshal(data)
 	if err != nil {
 		log.Println("error:", err)
 		os.Exit(1)
@@ -112,7 +112,7 @@ func genNews(svc *sheets.Service, spreadsheetID string) {
 		log.Println("error:", err)
 		os.Exit(1)
 	}
-	j, err := json.MarshalIndent(data, "  ", "  ")
+	j, err := json.Marshal(data)
 	if err != nil {
 		log.Println("error:", err)
 		os.Exit(1)
