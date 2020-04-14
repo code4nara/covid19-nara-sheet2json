@@ -25,6 +25,7 @@ type Patient struct {
 }
 
 func FetchPatients(svc *sheets.Service, spreadsheetID string) (*Patients, error) {
+	var err error
 	sheetRange := os.Getenv("COVID19_JSON2CSV_SHEET_RANGE_PATIENTS")
 	call := svc.Spreadsheets.Values.Get(spreadsheetID, sheetRange)
 	values, err := call.Do()
@@ -39,17 +40,20 @@ func FetchPatients(svc *sheets.Service, spreadsheetID string) (*Patients, error)
 			p.No, err = strconv.Atoi(val)
 			if err != nil {
 				log.Println(err)
-				return nil, err
+				break
 			}
 		}
 		if val, ok := v[3].(string); ok {
+			if val == "" {
+				break
+			}
 			p.Residence = val
 		}
 		if val, ok := v[4].(string); ok {
 			p.AnnouncementDate, err = time.Parse("2006-01-02", val)
 			if err != nil {
 				log.Println(err)
-				return nil, err
+				break
 			}
 		}
 		if val, ok := v[7].(string); ok {
@@ -60,7 +64,7 @@ func FetchPatients(svc *sheets.Service, spreadsheetID string) (*Patients, error)
 		}
 		ps.Data = append(ps.Data, p)
 	}
-	return &ps, nil
+	return &ps, err
 }
 
 func setSummaryData(cur time.Time, kv map[string]int) int {
