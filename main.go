@@ -57,6 +57,7 @@ func genData(svc *sheets.Service, spreadsheetID string) {
 	}
 	data.PatientsSummary = *patientsSummary
 	data.MainSummary = *mainSummary
+	data.LastUpdate = time.Now().Format("2006/01/02 15:04")
 	j, err := json.Marshal(data)
 	if err != nil {
 		log.Println("error:", err)
